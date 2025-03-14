@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "target": "es2020",
+      "moduleResolution": "node",
+      "sourceMap": true,
+      "outDir": "dist"
+    },
+    "lib": ["es2018", "es2019", "es2020", "es2021", "es2022", "es2023", "esnext.asynciterable", "esnext", "node"],
+    "exclude": ["node_modules"]
+  }
