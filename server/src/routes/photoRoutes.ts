@@ -24,18 +24,6 @@ const upload = multer({storage: storage})
 router.get("/all", (req:Request, res: Response)=> {
     try {
         let albumData = JSON.parse(fs.readFileSync(path.join(__dirname, "../../public/albums.json"), "utf-8"));
-        albumData = albumData.filter((el:Album)=>el.ownerID==req.session.user.email);
-        
-        res.json({type: "SUCCESS", data: albumData})
-
-    } catch (err) {
-        res.json({type: "ERROR", msg: err});
-    }
-});
-
-router.get("/get", (req:Request, res: Response)=> {
-    try {
-        let albumData = JSON.parse(fs.readFileSync(path.join(__dirname, "../../public/albums.json"), "utf-8"));
         let albumIndex = albumData.findIndex((el:Album)=>el.albumID==req.query.albumID);
         
         if(albumIndex==-1 || !fs.existsSync(path.join(__dirname, `../../zips/${req.query.albumID}.zip`))) {
