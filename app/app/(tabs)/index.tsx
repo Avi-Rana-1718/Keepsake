@@ -10,6 +10,13 @@ export default function Index() {
 
   let photos = ["https://picsum.photos/seed/696/3000/2000", "https://picsum.photos/seed/696/3000/2000"];
 
+  useEffect(()=>{
+    fetch("https://nook.avirana.com/album/all").then(res=>res.json()).then(data=>{
+      console.log(data);
+      
+    })
+  })
+
   return (
     <View style={styles.main}>
       {/* NAV BAR */}
