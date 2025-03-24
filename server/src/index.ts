@@ -1,6 +1,7 @@
-import express from "express"
-import session from "express-session"
+import express from "express";
+import session from "express-session";
 import dotenv from "dotenv";
+import cors from "cors";
 
 import authRoutes from "./routes/authRoutes";
 import albumRoutes from "./routes/albumRoutes";
@@ -12,14 +13,15 @@ import auth from "./middleware/auth.middleware";
 const app = express();
 dotenv.config();
 
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({extended: true}));
 app.use(session({
     secret: process.env.SECERT,
     resave: false,
     saveUninitialized: true
 
-}))
+}));
 
 // routes
 app.use("/auth", authRoutes);

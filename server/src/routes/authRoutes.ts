@@ -43,7 +43,7 @@ router.post("/create", (req:Request, res:Response)=>{
         res.json({type: "SUCCESS", msg: "New user created!"});
 
     } else {
-        res.json({type: "ERROR", msg: "User with these credentials not found!"});
+        res.json({type: "ERROR", msg: "User with this email already exists!"});
     }
 
 });
