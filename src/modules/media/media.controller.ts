@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Session, UploadedFiles, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, Param, Post, Session, UploadedFiles, UseInterceptors } from "@nestjs/common";
 import { ResponseInterface } from "src/common/interfaces/response.interface";
 import type { SessionInterface } from "src/common/interfaces/session.interface";
 import { MediaService } from "./media.service";

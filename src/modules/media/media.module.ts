@@ -18,8 +18,6 @@ import * as fs from 'fs';
 
       // Ensure directories exist
       fs.mkdirSync(uploadPath, { recursive: true });
-      console.log(uploadPath);
-      
       cb(null, uploadPath);
     },
     filename: (req, file, cb) => {

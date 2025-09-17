@@ -4,6 +4,8 @@ import { MediaTypes } from 'src/common/enums/MediaTypes.enums';
 import { ResponseInterface } from 'src/common/interfaces/response.interface';
 import { MediaEntity } from 'src/entities/media.entity';
 import { Repository } from 'typeorm';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Injectable()
 export class MediaService {
@@ -25,7 +27,7 @@ export class MediaService {
     const data = await this.mediaRepository.findBy({ albumId, userId });
 
     for(let item of data) {
-      item.url = `http://localhost:3000/static${item.url}`;
+      item.url = `${process.env.BASE_URL}static${item.url}`;
       console.log(item.url);
       
     }
@@ -80,7 +82,7 @@ export class MediaService {
     }
 
     for(let item of data) {
-      item.url = `http://localhost:3000/static${item.url}`;
+      item.url = `${process.env.BASE_URL}static${item.url}`;
       console.log(item.url);
       
     }

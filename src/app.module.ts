@@ -8,14 +8,16 @@ import { MediaEntity } from './entities/media.entity';
 import { AlbumsEntity } from './entities/albums.entity';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'ep-aged-poetry-a1u3in5o-pooler.ap-southeast-1.aws.neon.tech',
-      username: 'neondb_owner',
-      password: 'npg_VuLXZEw54MPJ',
+      host: process.env.DB_HOST,
+      username: process.env.DB_USER,
+      password: process.env.PASSWORD,
       database: 'neondb',
       entities: [UserEntity, MediaEntity, AlbumsEntity],
       ssl: true,
