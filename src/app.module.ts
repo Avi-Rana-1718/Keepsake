@@ -11,13 +11,16 @@ import { join } from 'path';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
+console.log(process.env);
+
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
       username: process.env.DB_USER,
-      password: process.env.PASSWORD,
+      password: process.env.DB_PASSWORD,
       database: 'neondb',
       entities: [UserEntity, MediaEntity, AlbumsEntity],
       ssl: true,
