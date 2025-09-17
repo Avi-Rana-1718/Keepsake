@@ -16,7 +16,7 @@ async function bootstrap() {
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
-        secure: false, // secure cookies only in prod
+        secure: process.env.ENV == "prod", // secure cookies only in prod
         sameSite: "lax", // or 'none' if cross-site with secure:true
       },
     }),
