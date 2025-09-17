@@ -7,7 +7,7 @@ dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors({ credentials: true, origin: process.env.FRONTEND_URL ?? 'http://localhost:5173' });
+  app.enableCors({ credentials: true, origin: 'https://nook-pwa.vercel.app' });
 
   app.use(
     session({
@@ -15,9 +15,9 @@ async function bootstrap() {
       resave: false,
       saveUninitialized: false,
       cookie: {
-        httpOnly: false,
-        secure: process.env.NODE_ENV == "prod", // secure cookies only in prod
-        sameSite: "lax", // or 'none' if cross-site with secure:true
+        httpOnly: true,
+        secure: true, // secure cookies only in prod
+        sameSite: "none", // or 'none' if cross-site with secure:true
       },
     }),
   );
