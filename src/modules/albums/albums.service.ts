@@ -1,7 +1,6 @@
 import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 import { ResponseInterface } from 'src/common/interfaces/response.interface';
 import { AlbumsEntity } from 'src/entities/albums.entity';
-import { v4 as uuidv4 } from 'uuid';
 import { CreateAlbumDto } from './dto/create.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';

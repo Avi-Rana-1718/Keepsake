@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Session, UploadedFiles, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, Param, Post, Query, Session, UploadedFiles, UseInterceptors } from "@nestjs/common";
 import { ResponseInterface } from "src/common/interfaces/response.interface";
 import type { SessionInterface } from "src/common/interfaces/session.interface";
 import { MediaService } from "./media.service";
@@ -16,7 +16,7 @@ export class MediaController {
       return this.mediaService.uploadImages(files, albumId, session.userId);
    }
 
-   @Get("/:albumId")
+   @Get("/album/:albumId")
    async getImages(@Session() session: SessionInterface, @Param("albumId") albumId: string): Promise<ResponseInterface> {
       return this.mediaService.getAllMediaAlbum(albumId, session.userId);
    }
@@ -24,5 +24,10 @@ export class MediaController {
    @Get("/")
    async getAllUserMedia(@Session() session: SessionInterface): Promise<ResponseInterface> {
       return this.mediaService.getAllUserMedia(session.userId);
+   }
+   
+   @Get("/:mediaId")
+   async getMediaById(@Param("mediaId") mediaId: string, @Session() session: SessionInterface): Promise<ResponseInterface> {
+      return this.mediaService.getMediaById(mediaId, session.userId);
    }
 }

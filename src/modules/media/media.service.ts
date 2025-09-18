@@ -72,10 +72,7 @@ export class MediaService {
   }
 
   async getAllUserMedia(userId: string): Promise<ResponseInterface> {
-    const data: MediaEntity[] = await this.mediaRepository.manager.query(
-      `SELECT * FROM media WHERE media.userId = $1 and media.is_active is true ORDER BY media.created_at DESC LIMIT 10`,
-      [userId],
-    );
+    const data: MediaEntity[] = await this.mediaRepository.findBy({userId});
 
     if (!data) {
       throw new BadRequestException('No media found');
@@ -87,6 +84,21 @@ export class MediaService {
       
     }
 
+    return {
+      statusCode: HttpStatus.OK,
+      message: data,
+    };
+  }
+
+   async getMediaById(mediaId: string, userId: string): Promise<ResponseInterface> {
+    const data: MediaEntity|null = await this.mediaRepository.findOneBy({id: mediaId, userId: userId});
+
+    console.log(data, userId, mediaId);
+    
+    if (!data) {
+      throw new BadRequestException('No media found');
+    }
+    data.url = `${process.env.BASE_URL}static${data.url}`;
     return {
       statusCode: HttpStatus.OK,
       message: data,
