@@ -7,7 +7,6 @@ import { Repository } from 'typeorm';
 import * as dotenv from 'dotenv';
 import { AlbumsEntity } from 'src/entities/albums.entity';
 import * as uuid from 'uuid'
-import { RabbitMQService } from 'src/services/rabbitmq.service';
 dotenv.config();
 
 @Injectable()
@@ -17,7 +16,6 @@ export class MediaService {
     private mediaRepository: Repository<MediaEntity>,
     @InjectRepository(AlbumsEntity)
     private albumsRepository: Repository<AlbumsEntity>,
-    private readonly rabbitMQService: RabbitMQService
   ) {}
 
   async getAllMediaAlbum(
@@ -61,9 +59,6 @@ export class MediaService {
         url: `/${userId}/${file.filename}`,
         type: MediaTypes.IMAGE
       };
-
-      this.rabbitMQService.publishEvent("new_image", file.buffer.toString("base64"))
-
       return media;
     });
 

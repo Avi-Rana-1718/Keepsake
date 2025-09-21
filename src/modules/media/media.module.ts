@@ -8,7 +8,6 @@ import { MediaEntity } from 'src/entities/media.entity';
 import path from 'path';
 import * as fs from 'fs';
 import { AlbumsEntity } from 'src/entities/albums.entity';
-import { RabbitMQService } from 'src/services/rabbitmq.service';
 
 @Module({
   imports: [
@@ -30,9 +29,8 @@ import { RabbitMQService } from 'src/services/rabbitmq.service';
     },
   }),
 }),
-    TypeOrmModule.forFeature([MediaEntity, AlbumsEntity]),
-    RabbitMQService
-  ],
+    TypeOrmModule.forFeature([MediaEntity, AlbumsEntity])
+    ],
   controllers: [MediaController],
   providers: [MediaService],
 })
