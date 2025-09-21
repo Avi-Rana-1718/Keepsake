@@ -5,6 +5,9 @@ import { ResponseInterface } from 'src/common/interfaces/response.interface';
 import { MediaEntity } from 'src/entities/media.entity';
 import { Repository } from 'typeorm';
 import * as dotenv from 'dotenv';
+import { AlbumsEntity } from 'src/entities/albums.entity';
+import * as uuid from 'uuid'
+import { RabbitMQService } from 'src/services/rabbitmq.service';
 dotenv.config();
 
 @Injectable()
@@ -12,6 +15,9 @@ export class MediaService {
   constructor(
     @InjectRepository(MediaEntity)
     private mediaRepository: Repository<MediaEntity>,
+    @InjectRepository(AlbumsEntity)
+    private albumsRepository: Repository<AlbumsEntity>,
+    private readonly rabbitMQService: RabbitMQService
   ) {}
 
   async getAllMediaAlbum(
@@ -19,48 +25,50 @@ export class MediaService {
     userId: string,
   ): Promise<ResponseInterface> {
 
-    
-    if(!albumId) {
-      albumId = 'default';
-    }
+    const album: AlbumsEntity | null = await this.albumsRepository.findOneBy({id: albumId, userId: userId});
 
-    const data = await this.mediaRepository.findBy({ albumId, userId });
-
-    for(let item of data) {
-      item.url = `${process.env.BASE_URL}static${item.url}`;
-      console.log(item.url);
-      
-    }
-    if (!data) {
-      throw new BadRequestException('No media found');
+    if(!album) {
+      throw new BadRequestException('Album not found');
     }
 
     return {
       statusCode: HttpStatus.OK,
-      message: data,
+      message: album.content || [],
     };
   }
 
   async uploadImages(
     files: Express.Multer.File[],
-    albumId: string | null,
+    albumId: string,
     userId: string,
   ): Promise<ResponseInterface> {
+
+    const album: AlbumsEntity | null = await this.albumsRepository.findOneBy({id: albumId, userId: userId});
+
+    if(!album) {
+      throw new BadRequestException('Album not found');
+    }
 
     if (!files || files.length === 0) {
       throw new BadRequestException('No files uploaded');
     }
     
-
     const mediaEntities: MediaEntity[] = files.map((file) => {
       const media: MediaEntity = {
-        albumId: albumId || 'default',
+        id: uuid.v4(),
         userId,
         size: file.size,
         url: `/${userId}/${file.filename}`,
         type: MediaTypes.IMAGE
       };
+
+      this.rabbitMQService.publishEvent("new_image", file.buffer.toString("base64"))
+
       return media;
+    });
+
+    await this.albumsRepository.update(albumId, {
+      content: [...(album.content || []), ...mediaEntities.map(el=>el.id)]
     });
 
     await this.mediaRepository.save(mediaEntities);

@@ -1,13 +1,10 @@
 import { MediaTypes } from "src/common/enums/MediaTypes.enums";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("media")
 export class MediaEntity {
-    @PrimaryGeneratedColumn("uuid")
-    id?: string;
-
-    @Column({nullable: true})
-    albumId: string;
+    @PrimaryColumn("uuid")
+    id: string;
 
     @Column({nullable: false})
     userId: string;

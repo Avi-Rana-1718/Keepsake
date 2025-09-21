@@ -10,10 +10,14 @@ import { AuthInterceptor } from 'src/interceptors/AuthInterceptor';
 export class MediaController {
    constructor(private readonly mediaService: MediaService) {}
 
-   @Post("/upload/:albumId")
-   @UseInterceptors(FilesInterceptor("files"))
-   async uploadImages(@UploadedFiles() files: Express.Multer.File[], @Session() session: SessionInterface, @Param("albumId") albumId: string): Promise<ResponseInterface> {
-      return this.mediaService.uploadImages(files, albumId, session.userId);
+   @Get("/")
+   async getAllUserMedia(@Session() session: SessionInterface): Promise<ResponseInterface> {
+      return this.mediaService.getAllUserMedia(session.userId);
+   }
+
+   @Get("/:mediaId")
+   async getMediaById(@Param("mediaId") mediaId: string, @Session() session: SessionInterface): Promise<ResponseInterface> {
+      return this.mediaService.getMediaById(mediaId, session.userId);
    }
 
    @Get("/album/:albumId")
@@ -21,13 +25,9 @@ export class MediaController {
       return this.mediaService.getAllMediaAlbum(albumId, session.userId);
    }
 
-   @Get("/")
-   async getAllUserMedia(@Session() session: SessionInterface): Promise<ResponseInterface> {
-      return this.mediaService.getAllUserMedia(session.userId);
-   }
-   
-   @Get("/:mediaId")
-   async getMediaById(@Param("mediaId") mediaId: string, @Session() session: SessionInterface): Promise<ResponseInterface> {
-      return this.mediaService.getMediaById(mediaId, session.userId);
+   @Post("/upload/:albumId")
+   @UseInterceptors(FilesInterceptor("files"))
+   async uploadImages(@UploadedFiles() files: Express.Multer.File[], @Session() session: SessionInterface, @Param("albumId") albumId: string): Promise<ResponseInterface> {
+      return this.mediaService.uploadImages(files, albumId, session.userId);
    }
 }

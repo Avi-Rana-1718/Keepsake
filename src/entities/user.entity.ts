@@ -1,9 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("users")
 export class UserEntity {
-    @PrimaryGeneratedColumn("uuid")
-    id: string
+    @PrimaryColumn("uuid", {nullable: false})
+    id: string;
 
     @Column({ unique: true, nullable: false })
     email: string;
@@ -16,6 +16,9 @@ export class UserEntity {
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_at?: Date;
+
+    @Column({nullable: true})
+    favoriteAlbumID?: string;
 
     @Column({ nullable: false, default: true })
     is_active?: boolean;

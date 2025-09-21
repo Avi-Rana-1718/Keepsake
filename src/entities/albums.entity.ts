@@ -1,9 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('albums')
 export class AlbumsEntity {
-    @PrimaryGeneratedColumn("uuid")
-    id?: string;
+    @PrimaryColumn("uuid")
+    id: string;
 
     @Column({nullable: false, default: "Untitled Album"})
     albumName: string;
@@ -17,8 +17,11 @@ export class AlbumsEntity {
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_at?: Date;
 
-    @Column({ type: 'timestamp'})
+    @Column({ type: 'timestamp', nullable: true})
     updated_at?: Date;
+
+    @Column("text", {array: true})
+    content: string[];
 
     @Column("json", {nullable: true})
     metadata?: {

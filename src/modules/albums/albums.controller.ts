@@ -21,6 +21,11 @@ export class AlbumsController {
         return await this.albumsService.createAlbum(createAlbumDto, session.userId);
     }
 
+    @Post("addMedia")
+    async addMediaToAlbum(@Body() body: any): Promise<ResponseInterface> {
+        return await this.albumsService.addMediaToAlbum(body.albumId, body.mediaId);
+    }
+
     @Delete("delete")
     async deleteAlbum(@Query("id") id: string) {
 
