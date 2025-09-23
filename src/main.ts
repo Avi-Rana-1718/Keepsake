@@ -8,7 +8,7 @@ dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.enableCors({ credentials: true, origin: 'https://nook-pwa.vercel.app' });
+  app.enableCors({ credentials: true, origin: '*' });
 
   app.set('trust proxy', 1);
   app.use(
