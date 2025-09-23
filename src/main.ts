@@ -8,7 +8,12 @@ dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.enableCors({ credentials: true, origin: '*' });
+  app.enableCors({
+    credentials: true,
+    origin: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+  });
 
   app.set('trust proxy', 1);
   app.use(
@@ -18,8 +23,8 @@ async function bootstrap() {
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
-        secure: true, // secure cookies only in prod
-        sameSite: 'none', // or 'none' if cross-site with secure:true
+        secure: false, // secure cookies only in prod
+        sameSite: 'lax', // or 'none' if cross-site with secure:true
       },
     }),
   );
