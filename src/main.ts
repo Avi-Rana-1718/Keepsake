@@ -23,8 +23,8 @@ async function bootstrap() {
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
-        secure: false, // secure cookies only in prod
-        sameSite: 'lax', // or 'none' if cross-site with secure:true
+        secure: true, // secure cookies only in prod
+        sameSite: 'none', // or 'none' if cross-site with secure:true
       },
     }),
   );
