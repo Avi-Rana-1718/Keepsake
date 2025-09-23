@@ -1,4 +1,4 @@
-import { BadRequestException, CallHandler, ExecutionContext, HttpStatus, Injectable, NestInterceptor } from "@nestjs/common";
+import { BadRequestException, CallHandler, ExecutionContext, HttpStatus, Injectable, NestInterceptor, UnauthorizedException } from "@nestjs/common";
 import { Observable } from "rxjs";
 
 @Injectable()
@@ -10,6 +10,6 @@ export class AuthInterceptor implements NestInterceptor {
       return next.handle();
     }
 
-    throw new BadRequestException(HttpStatus.UNAUTHORIZED, 'Unauthorized request');
+    throw new UnauthorizedException(HttpStatus.UNAUTHORIZED, 'Unauthorized request');
  }
 }
