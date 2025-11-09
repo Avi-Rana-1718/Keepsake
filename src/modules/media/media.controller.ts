@@ -3,7 +3,7 @@ import { ResponseInterface } from "src/common/interfaces/response.interface";
 import type { SessionInterface } from "src/common/interfaces/session.interface";
 import { MediaService } from "./media.service";
 import { FilesInterceptor } from "@nestjs/platform-express";
-import { AuthInterceptor } from 'src/interceptors/AuthInterceptor';
+import { AuthInterceptor } from 'src/interceptors/auth.interceptor';
 
 @UseInterceptors(AuthInterceptor)
 @Controller("media")

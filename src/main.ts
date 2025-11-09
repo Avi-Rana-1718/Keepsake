@@ -4,6 +4,7 @@ import session from 'express-session';
 import { join } from 'path';
 import * as dotenv from 'dotenv';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { ExceptionInterceptor } from './interceptors/exception.interceptor';
 dotenv.config();
 
 async function bootstrap() {
@@ -28,9 +29,7 @@ async function bootstrap() {
       },
     }),
   );
-
-  console.log(join(__dirname, '../files'));
-
+  app.useGlobalFilters(new ExceptionInterceptor)
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

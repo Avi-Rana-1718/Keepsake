@@ -3,7 +3,7 @@ import { ResponseInterface } from "src/common/interfaces/response.interface";
 import { CreateAlbumDto } from "./dto/create.dto";
 import { AlbumsService } from "./albums.service";
 import type { SessionInterface } from "src/common/interfaces/session.interface";
-import { AuthInterceptor } from "src/interceptors/AuthInterceptor";
+import { AuthInterceptor } from "src/interceptors/auth.interceptor";
 
 @UseInterceptors(AuthInterceptor)
 @Controller("albums")
