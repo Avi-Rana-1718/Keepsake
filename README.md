@@ -1,98 +1,202 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Nook - Media Storage API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A NestJS-based media storage API that allows users to manage albums and media files with authentication.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- 🔐 User authentication
+- 📁 Album management
+- 🖼️ Media upload and management 
+- 🔒 Secure session handling
+- 🗃️ PostgreSQL database integration
+- 📤 Static file serving
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Prerequisites
 
-## Project setup
+- Node.js (LTS version)
+- PostgreSQL database
+- Docker (optional, for containerization)
 
-```bash
-$ npm install
+## Environment Variables
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+DB_HOST=your_database_host
+DB_USER=your_database_user
+DB_PASSWORD=your_database_password
+SESSION_SECRET=your_session_secret
+BASE_URL=your_base_url
+PORT=3000 # optional, defaults to 3000
 ```
 
-## Compile and run the project
+## Installation
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+# Install dependencies
+npm install
 ```
 
-## Run tests
+## Running the Application
 
 ```bash
-# unit tests
-$ npm run test
+# Development mode
+npm run start:dev
 
-# e2e tests
-$ npm run test:e2e
+# Production mode
+npm run start:prod
 
-# test coverage
-$ npm run test:cov
+# Debug mode
+npm run start:debug
 ```
 
-## Deployment
+## Docker Deployment
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+The project includes a Dockerfile for containerization:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Build the Docker image
+docker build -t nook-api .
+
+# Run the container
+docker run -p 3000:3000 nook-api
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## API Endpoints
 
-## Resources
+### Authentication
+- `POST /auth/create` - Create new user account
+- `POST /auth/login` - User login
 
-Check out a few resources that may come in handy when working with NestJS:
+### Albums
+- `GET /albums` - Get all albums for authenticated user
+- `POST /albums/create` - Create new album
+- `POST /albums/addMedia` - Add media to album
+- `DELETE /albums/delete` - Delete album
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Media
+- `GET /media` - Get all media for authenticated user
+- `GET /media/:mediaId` - Get specific media
+- `GET /media/album/:albumId` - Get all media in album
+- `POST /media/upload/:albumId` - Upload media to album
 
-## Support
+## Project Structure
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```
+src/
+├── common/         # Shared interfaces and enums
+├── entities/       # TypeORM entities
+├── interceptors/   # HTTP interceptors
+├── modules/        # Feature modules
+│   ├── auth/      # Authentication
+│   ├── albums/    # Album management
+│   └── media/     # Media handling
+└── main.ts        # Application entry point
+```
 
-## Stay in touch
+## Testing
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+# Unit tests
+npm run test
+
+# E2E tests
+npm run test:e2e
+
+# Test coverage
+npm run test:cov
+```
+
+## Built With
+
+- [NestJS](https://nestjs.com/) - The web framework
+- [TypeORM](https://typeorm.io/) - ORM
+- [PostgreSQL](https://www.postgresql.org/) - Database
+- [Express Session](https://www.npmjs.com/package/express-session) - Session management
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is MIT licensed.
+```
+
+This README provides a comprehensive overview of your project, including setup instructions, available endpoints, project structure, and other important information for developers who might work with your codebase.This README provides a comprehensive overview of your project, including setup instructions, available endpoints, project structure, and other important information for developers who might work with your codebase.
+
+Avi-Rana-1718: only half the resposn eis a readme markdown
+
+Workspace: Collecting workspace information# Nook - Media Management API
+
+A NestJS-based REST API for managing media files and albums with secure authentication.
+
+## Features
+
+- User authentication with session management
+- Album creation and management
+- Media file upload and storage
+- CORS enabled for cross-origin requests
+- Secure cookie handling
+- PostgreSQL database integration
+- Static file serving
+
+## Prerequisites
+
+- Node.js (LTS version)
+- PostgreSQL database
+- Environment variables setup
+
+## Environment Variables
+
+Create a .env file with:
+
+```env
+DB_HOST=your_database_host
+DB_USER=your_database_user
+DB_PASSWORD=your_database_password
+SESSION_SECRET=your_session_secret
+BASE_URL=your_api_base_url
+PORT=3000 # optional
+```
+
+## Installation
+
+```bash
+npm install
+```
+
+## Running the Application
+
+```bash
+# Development
+npm run start:dev
+
+# Production
+npm run start:prod
+```
+
+## API Endpoints
+
+### Authentication
+- `POST /auth/login` - User login
+- `POST /auth/create` - Create new account
+
+### Albums
+- `GET /albums` - Get user's albums
+- `POST /albums/create` - Create new album
+- `POST /albums/addMedia` - Add media to album
+
+### Media
+- `GET /media` - Get user's media
+- `GET /media/:mediaId` - Get specific media
+- `POST /media/upload/:albumId` - Upload media to album
+
+## Docker Support
+
+Build and run with Docker:
+
+```bash
+docker build -t nook-api .
+docker run -p 3000:3000 nook-api
+```
+
+## License
+
+MIT
