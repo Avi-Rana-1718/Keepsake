@@ -51,6 +51,7 @@ export class MediaService {
       throw new BadRequestException('Album not found');
     }
 
+
     if (!files || files.length === 0) {
       throw new BadRequestException('No files uploaded');
     }
@@ -66,7 +67,7 @@ export class MediaService {
       return media;
     });
 
-    if (album) {
+    if (albumId && album) {
       await this.albumsRepository.update(albumId, {
         content: [
           ...(album.content || []),

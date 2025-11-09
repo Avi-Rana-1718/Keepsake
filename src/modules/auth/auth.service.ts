@@ -13,7 +13,6 @@ import { ResponseInterface } from 'src/common/interfaces/response.interface';
 import { SessionInterface } from 'src/common/interfaces/session.interface';
 import * as bcrypt from "bcrypt";
 import { AlbumsEntity } from 'src/entities/albums.entity';
-import { MediaEntity } from 'src/entities/media.entity';
 import * as uuid from "uuid"
 
 @Injectable()
@@ -53,7 +52,6 @@ export class AuthService {
       content: []
     };
 
-    user.favoriteAlbumID = album.id;
 
     await this.userRepository.save(user);
     await this.albumRepository.save(album);

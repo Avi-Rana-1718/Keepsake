@@ -16,10 +16,7 @@ export class UserEntity {
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_at?: Date;
-
-    @Column({nullable: true})
-    favoriteAlbumID?: string;
-
+    
     @Column({ nullable: false, default: true })
     is_active?: boolean;
 }
