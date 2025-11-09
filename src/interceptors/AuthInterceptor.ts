@@ -1,4 +1,4 @@
-import { BadRequestException, CallHandler, ExecutionContext, HttpStatus, Injectable, NestInterceptor, UnauthorizedException } from "@nestjs/common";
+import { CallHandler, ExecutionContext, HttpStatus, Injectable, NestInterceptor, UnauthorizedException } from "@nestjs/common";
 import { Observable } from "rxjs";
 
 @Injectable()

@@ -25,9 +25,9 @@ export class MediaController {
       return this.mediaService.getAllMediaAlbum(albumId, session.userId);
    }
 
-   @Post("/upload/:albumId")
+   @Post("/upload")
    @UseInterceptors(FilesInterceptor("files"))
-   async uploadImages(@UploadedFiles() files: Express.Multer.File[], @Session() session: SessionInterface, @Param("albumId") albumId: string): Promise<ResponseInterface> {
+   async uploadImages(@UploadedFiles() files: Express.Multer.File[], @Session() session: SessionInterface, @Query("albumId") albumId: string): Promise<ResponseInterface> {
       return this.mediaService.uploadImages(files, albumId, session.userId);
    }
 }
